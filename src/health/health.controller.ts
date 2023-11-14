@@ -1,10 +1,13 @@
 import { Controller, Get } from '@nestjs/common';
 import { HealthCheckService, HttpHealthIndicator, HealthCheck } from '@nestjs/terminus';
+import * as dotenv from 'dotenv';
+dotenv.config();
+
 
 @Controller('health')
 export class HealthController {
     
-    private readonly API_URL = 'https://6543ad6901b5e279de20c994.mockapi.io/todo/todos';
+    private readonly API_URL =  process.env.API_URL;
 
   constructor(
     private health: HealthCheckService,

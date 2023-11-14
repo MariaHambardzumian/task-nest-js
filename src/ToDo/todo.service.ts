@@ -1,10 +1,12 @@
 import { Injectable } from "@nestjs/common";
 import { TodoDto } from "./dto/todo.model";
 import axios from 'axios'
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Injectable()
 export class TodoService {
-  private readonly API_URL = 'https://6543ad6901b5e279de20c994.mockapi.io/todo/todos';
+  private readonly API_URL =  process.env.API_URL;
 
   async getAllTodos(): Promise<TodoDto[]> {
     const response = await axios.get<TodoDto[]>(this.API_URL);
