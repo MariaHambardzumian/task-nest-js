@@ -1,13 +1,15 @@
 import { Controller, Get } from '@nestjs/common';
-import { HealthCheckService, HttpHealthIndicator, HealthCheck } from '@nestjs/terminus';
+import {
+  HealthCheckService,
+  HttpHealthIndicator,
+  HealthCheck,
+} from '@nestjs/terminus';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-
 @Controller('health')
 export class HealthController {
-    
-    private readonly API_URL =  process.env.API_URL;
+  private readonly API_URL = process.env.API_URL;
 
   constructor(
     private health: HealthCheckService,
@@ -17,8 +19,6 @@ export class HealthController {
   @Get()
   @HealthCheck()
   check() {
-    return this.health.check([
-      () => this.http.pingCheck('', this.API_URL),
-    ]);
+    return this.health.check([() => this.http.pingCheck('', this.API_URL)]);
   }
 }

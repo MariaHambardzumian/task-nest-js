@@ -9,5 +9,4 @@ export class TodoDto {
 
   @ApiProperty({ example: '45' })
   id: string;
-
 }
