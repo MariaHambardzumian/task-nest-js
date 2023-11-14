@@ -49,6 +49,7 @@ export class TodoController {
     type: TodoDto,
   })
   async getTodoById(@Param('id') id: string): Promise<TodoDto> {
+    
     return await this.todoService.getTodoById(id);
   }
 
