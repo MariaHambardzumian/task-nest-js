@@ -2,36 +2,43 @@ import { Injectable } from '@nestjs/common';
 import { TodoDto } from './dto/todo.model';
 import axios from 'axios';
 import * as dotenv from 'dotenv';
+import configService from 'src/config/config.service';
 dotenv.config();
 
 @Injectable()
 export class TodoService {
-  private readonly API_URL = process.env.API_URL;
+  
+  constructor(private configService: configService) {}
 
   async getAllTodos(): Promise<TodoDto[]> {
-    const response = await axios.get<TodoDto[]>(this.API_URL);
+    const response = await axios.get<TodoDto[]>(this.configService.getApiUrl());
     return response.data;
   }
 
   async getTodoById(id: string): Promise<TodoDto> {
-    const response = await axios.get<TodoDto>(`${this.API_URL}/${id}`);
+    const response = await axios.get<TodoDto>(
+      `${this.configService.getApiUrl()}/${id}`,
+    );
     return response.data;
   }
 
   async addTodo(todo: TodoDto): Promise<TodoDto> {
-    const response = await axios.post<TodoDto>(this.API_URL, todo);
+    const response = await axios.post<TodoDto>(
+      this.configService.getApiUrl(),
+      todo,
+    );
     return response.data;
   }
 
   async updateTodo(id: string, updatedTodo: TodoDto): Promise<TodoDto> {
     const response = await axios.put<TodoDto>(
-      `${this.API_URL}/${id}`,
+      `${this.configService.getApiUrl()}/${id}`,
       updatedTodo,
     );
     return response.data;
   }
 
   async deleteTodo(id: string): Promise<void> {
-    await axios.delete(`${this.API_URL}/${id}`);
+    await axios.delete(`${this.configService.getApiUrl()}/${id}`);
   }
 }

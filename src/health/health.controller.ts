@@ -5,20 +5,22 @@ import {
   HealthCheck,
 } from '@nestjs/terminus';
 import * as dotenv from 'dotenv';
+import configService from 'src/config/config.service';
 dotenv.config();
 
 @Controller('health')
 export class HealthController {
-  private readonly API_URL = process.env.API_URL;
-
   constructor(
     private health: HealthCheckService,
     private http: HttpHealthIndicator,
+    private configService: configService,
   ) {}
 
   @Get()
   @HealthCheck()
   check() {
-    return this.health.check([() => this.http.pingCheck('', this.API_URL)]);
+    return this.health.check([
+      () => this.http.pingCheck('', this.configService.getApiUrl()),
+    ]);
   }
 }
