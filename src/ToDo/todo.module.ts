@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TodoController } from './todo.controller';
 import { TodoService } from './todo.service';
-import { ConfigModule } from '@nestjs/config';
+import { LoggerModule } from 'src/logger/logger.module';
 
 @Module({
-  imports: [ ConfigModule.forRoot({ isGlobal: true })],
+  imports:[LoggerModule, ],
   controllers: [TodoController],
   providers: [TodoService],
 })
