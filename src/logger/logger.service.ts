@@ -21,7 +21,6 @@ export class LoggerService {
 
     this.logger.info(`${message}\n${direction} Data: ${dataMessage}\n\n`);
   }
-  
 
   error(message: string, trace: string) {
     this.logger.error(`${message} \nStack: ${trace}\n\n`);

@@ -4,7 +4,7 @@ import { TodoService } from './todo.service';
 import { LoggerModule } from 'src/logger/logger.module';
 
 @Module({
-  imports:[LoggerModule, ],
+  imports: [LoggerModule],
   controllers: [TodoController],
   providers: [TodoService],
 })

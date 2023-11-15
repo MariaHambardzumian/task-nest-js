@@ -5,11 +5,12 @@ import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class TodoService {
-
   constructor(private configService: ConfigService) {}
 
   async getAllTodos(): Promise<TodoDto[]> {
-    const response = await axios.get<TodoDto[]>(this.configService.get<string>('API_URL'));
+    const response = await axios.get<TodoDto[]>(
+      this.configService.get<string>('API_URL'),
+    );
     return response.data;
   }
 
