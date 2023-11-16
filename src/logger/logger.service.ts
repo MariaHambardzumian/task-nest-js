@@ -1,6 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import * as winston from 'winston';
 
+interface LogOptions {
+  message: string;
+  params?: any;
+  requestBody?: any;
+  response?: any;
+}
+
 @Injectable()
 export class LoggerService {
   private logger: winston.Logger;
@@ -15,11 +22,32 @@ export class LoggerService {
     });
   }
 
-  log(message: string, sent: boolean = true, data?: any) {
-    const direction = sent ? 'Sent' : 'Received';
-    const dataMessage = data ? JSON.stringify(data, null, 2) : 'No data';
-
-    this.logger.info(`${message}\n${direction} Data: ${dataMessage}\n\n`);
+  log({ message, params, requestBody, response }: LogOptions) {
+    let logContent = `${message}\n`;
+    if (params) {
+      logContent += `--Sending request--\nParameters Sent : ${JSON.stringify(
+        params,
+        null,
+        2,
+      )}\n`;
+      if (requestBody) {
+        logContent += `Request Body : ${JSON.stringify(
+          requestBody,
+          null,
+          2,
+        )}\n`;
+      }
+      logContent += '\n';
+    } else if (response) {
+      logContent += `--Response returned--\nResponse : ${JSON.stringify(
+        response,
+        null,
+        2,
+      )}\n\n`;
+    } else {
+      logContent += 'No data\n\n';
+    }
+    this.logger.info(logContent);
   }
 
   error(message: string, trace: string) {
