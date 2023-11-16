@@ -29,7 +29,10 @@ export class TodoService {
     return response.data;
   }
 
-  async updateTodo(id: string, updatedTodo: Partial<TodoDto>): Promise<TodoDto> {
+  async updateTodo(
+    id: string,
+    updatedTodo: Partial<TodoDto>,
+  ): Promise<TodoDto> {
     const response = await axios.put<TodoDto>(
       `${this.configService.get<string>('API_URL')}/${id}`,
       updatedTodo,
